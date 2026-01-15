@@ -9,7 +9,7 @@ import Demo from './components/Demo';
 import SystemicJourney from './components/SystemicJourney';
 import Impact from './components/Impact';
 import Reflection from './components/Reflection';
-import Team from './components/Team';
+
 import Appendix from './components/Appendix';
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
         <Demo />
         <Impact />
         <Reflection />
-        <Team />
+
         <Appendix />
       </main>
     </div>
