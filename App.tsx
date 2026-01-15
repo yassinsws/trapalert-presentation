@@ -1,9 +1,11 @@
+
 import React from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Problem from './components/Problem';
 import Solution from './components/Solution';
 import Demo from './components/Demo';
+import SystemicJourney from './components/SystemicJourney';
 import Impact from './components/Impact';
 import Reflection from './components/Reflection';
 import Team from './components/Team';
@@ -17,9 +19,10 @@ function App() {
         <Hero />
         <Problem />
         <Solution />
+        <SystemicJourney />
+        <Reflection />
         <Demo />
         <Impact />
-        <Reflection />
         <Team />
         <Appendix />
       </main>

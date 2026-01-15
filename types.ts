@@ -1,3 +1,4 @@
+
 export interface TeamMember {
   name: string;
   role: string;
@@ -14,8 +15,9 @@ export enum SectionId {
   PROBLEM = 'problem',
   SOLUTION = 'solution',
   DEMO = 'demo',
-  IMPACT = 'impact',
+  SYSTEMIC = 'systemic',
   REFLECTION = 'reflection',
+  IMPACT = 'impact',
   TEAM = 'team',
   APPENDIX = 'appendix'
 }

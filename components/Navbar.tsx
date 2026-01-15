@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Eye } from 'lucide-react';
 import { NavItem, SectionId } from '../types';
@@ -5,9 +6,9 @@ import { NavItem, SectionId } from '../types';
 const navItems: NavItem[] = [
   { label: 'Problem', href: `#${SectionId.PROBLEM}` },
   { label: 'Solution', href: `#${SectionId.SOLUTION}` },
-  { label: 'Demo', href: `#${SectionId.DEMO}` },
-  { label: 'Impact', href: `#${SectionId.IMPACT}` },
+  { label: 'Journey', href: `#${SectionId.SYSTEMIC}` },
   { label: 'Reflection', href: `#${SectionId.REFLECTION}` },
+  { label: 'Demo', href: `#${SectionId.DEMO}` },
   { label: 'Team', href: `#${SectionId.TEAM}` },
 ];
 
