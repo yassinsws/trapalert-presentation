@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { SectionId } from '../types';
-import { Brain, Users, EyeOff, ShieldCheck, Zap, UserCircle, Accessibility, Code } from 'lucide-react';
+import { ShieldCheck, Zap } from 'lucide-react';
 
 const Reflection: React.FC = () => {
   return (
@@ -14,55 +14,7 @@ const Reflection: React.FC = () => {
             </p>
         </div>
 
-        {/* Part 1: Inclusive Segment Cards */}
-        <div className="mb-24">
-            <div className="flex items-center gap-3 mb-10">
-                <Users className="w-8 h-8 text-brand-yellow" />
-                <h3 className="text-2xl font-bold font-display">Inclusive Segment Cards</h3>
-            </div>
-            <div className="grid md:grid-cols-3 gap-8">
-                {/* Group 1 */}
-                <div className="group bg-beige-50 p-8 rounded-2xl border border-beige-200 hover:border-brand-yellow transition-all shadow-sm">
-                    <Accessibility className="w-10 h-10 text-brand-dark mb-6 group-hover:scale-110 transition-transform" />
-                    <h4 className="text-xl font-bold mb-4">Screen Reader & Keyboard Users</h4>
-                    <p className="text-sm text-brand-gray leading-relaxed mb-6">
-                        <strong>The Privilege Gap:</strong> Visual-only UI defaults create systemic barriers. Lack of keyboard access has been a top issue for 14+ years.
-                    </p>
-                    <div className="space-y-3">
-                        <div className="px-3 py-1 bg-white border border-beige-200 rounded text-xs font-semibold uppercase text-brand-dark inline-block">Gains</div>
-                        <p className="text-xs text-brand-gray">Detection of "Dead-End Tabs" flags critical failures (WCAG 2.1.2) giving silent users a voice in the development cycle.</p>
-                    </div>
-                </div>
-
-                {/* Group 2 */}
-                <div className="group bg-beige-50 p-8 rounded-2xl border border-beige-200 hover:border-brand-yellow transition-all shadow-sm">
-                    <Brain className="w-10 h-10 text-brand-dark mb-6 group-hover:scale-110 transition-transform" />
-                    <h4 className="text-xl font-bold mb-4">Cognitive & Neurodiverse</h4>
-                    <p className="text-sm text-brand-gray leading-relaxed mb-6">
-                        <strong>The Invisible Struggle:</strong> ADHD or dyslexia can lead to quick frustration with unintuitive UI. These users often leave without articulating why.
-                    </p>
-                    <div className="space-y-3">
-                        <div className="px-3 py-1 bg-white border border-beige-200 rounded text-xs font-semibold uppercase text-brand-dark inline-block">Gains</div>
-                        <p className="text-xs text-brand-gray">BehaviorEngine picks up rage clicks and abandonment as proxies for confusion, prompting UI simplification.</p>
-                    </div>
-                </div>
-
-                {/* Group 3 */}
-                <div className="group bg-beige-50 p-8 rounded-2xl border border-beige-200 hover:border-brand-yellow transition-all shadow-sm">
-                    <Code className="w-10 h-10 text-brand-dark mb-6 group-hover:scale-110 transition-transform" />
-                    <h4 className="text-xl font-bold mb-4">Developers & Specialists</h4>
-                    <p className="text-sm text-brand-gray leading-relaxed mb-6">
-                        <strong>The Power Gap:</strong> Developers hold high technical privilege but often lack lived experience of disabilities.
-                    </p>
-                    <div className="space-y-3">
-                        <div className="px-3 py-1 bg-white border border-beige-200 rounded text-xs font-semibold uppercase text-brand-dark inline-block">Gains</div>
-                        <p className="text-xs text-brand-gray">Acts as an "accessibility smoke detector," surfacing evidence that would otherwise be ignored until a lawsuit happens.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {/* Part 2: Critical Reflection Cards */}
+        {/* Part 1: Critical Reflection Cards */}
         <div>
             <div className="flex items-center gap-3 mb-10">
                 <ShieldCheck className="w-8 h-8 text-brand-yellow" />

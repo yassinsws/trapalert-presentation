@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { Keyboard, MousePointerClick, AlertTriangle } from 'lucide-react';
+import { Keyboard, MousePointerClick, AlertTriangle, Accessibility, Brain, Code } from 'lucide-react';
 import { SectionId } from '../types';
 
 const Problem: React.FC = () => {
@@ -15,17 +16,39 @@ const Problem: React.FC = () => {
           </p>
         </div>
 
-        {/* Data Points */}
-        <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-beige-50 p-8 rounded-xl border border-beige-200">
-                <p className="text-brand-dark font-medium text-lg mb-2">The Silence</p>
-                <p className="text-3xl font-display font-bold text-brand-yellow mb-4">Only ~43%</p>
-                <p className="text-brand-gray">of users might leave feedback when they encounter an issue.</p>
+        {/* Inclusive Segment Cards - Moved Here */}
+        <div>
+            <div className="flex items-center gap-3 mb-10">
+                <Accessibility className="w-8 h-8 text-brand-yellow" />
+                <h3 className="text-2xl font-bold font-display">Inclusive Segments</h3>
             </div>
-            <div className="bg-beige-50 p-8 rounded-xl border border-beige-200">
-                <p className="text-brand-dark font-medium text-lg mb-2">The Legacy</p>
-                <p className="text-3xl font-display font-bold text-brand-dark mb-4">14+ Years</p>
-                <p className="text-brand-gray">Lack of keyboard accessibility remains a top 5 issue, indicating systemic neglect.</p>
+            <div className="grid md:grid-cols-3 gap-8">
+                {/* Group 1 */}
+                <div className="group bg-beige-50 p-8 rounded-2xl border border-beige-200 hover:border-brand-yellow transition-all shadow-sm">
+                    <Accessibility className="w-10 h-10 text-brand-dark mb-6 group-hover:scale-110 transition-transform" />
+                    <h4 className="text-xl font-bold mb-4">Screen Reader & Keyboard Users</h4>
+                    <p className="text-sm text-brand-gray leading-relaxed">
+                        <strong>The Privilege Gap:</strong> Visual-only UI defaults create systemic barriers. Lack of keyboard access has been a top issue for 14+ years.
+                    </p>
+                </div>
+
+                {/* Group 2 */}
+                <div className="group bg-beige-50 p-8 rounded-2xl border border-beige-200 hover:border-brand-yellow transition-all shadow-sm">
+                    <Brain className="w-10 h-10 text-brand-dark mb-6 group-hover:scale-110 transition-transform" />
+                    <h4 className="text-xl font-bold mb-4">Cognitive & Neurodiverse</h4>
+                    <p className="text-sm text-brand-gray leading-relaxed">
+                        <strong>The Invisible Struggle:</strong> ADHD or dyslexia can lead to quick frustration with unintuitive UI. These users often leave without articulating why.
+                    </p>
+                </div>
+
+                {/* Group 3 */}
+                <div className="group bg-beige-50 p-8 rounded-2xl border border-beige-200 hover:border-brand-yellow transition-all shadow-sm">
+                    <Code className="w-10 h-10 text-brand-dark mb-6 group-hover:scale-110 transition-transform" />
+                    <h4 className="text-xl font-bold mb-4">Developers & Specialists</h4>
+                    <p className="text-sm text-brand-gray leading-relaxed">
+                        <strong>The Power Gap:</strong> Developers hold high technical privilege but often lack lived experience of disabilities or specialized testing tools.
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -72,6 +95,20 @@ const Problem: React.FC = () => {
                 </blockquote>
             </div>
           </div>
+        </div>
+
+        {/* Data Points */}
+        <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-beige-50 p-8 rounded-xl border border-beige-200">
+                <p className="text-brand-dark font-medium text-lg mb-2">The Silence</p>
+                <p className="text-3xl font-display font-bold text-brand-yellow mb-4">Only ~43%</p>
+                <p className="text-brand-gray">of users might leave feedback when they encounter an issue.</p>
+            </div>
+            <div className="bg-beige-50 p-8 rounded-xl border border-beige-200">
+                <p className="text-brand-dark font-medium text-lg mb-2">The Legacy</p>
+                <p className="text-3xl font-display font-bold text-brand-dark mb-4">14+ Years</p>
+                <p className="text-brand-gray">Lack of keyboard accessibility remains a top 5 issue, indicating systemic neglect.</p>
+            </div>
         </div>
         
         {/* The Developer Problem */}
