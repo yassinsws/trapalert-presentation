@@ -1,6 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import { TrapAlert } from './core/TrapAlert';
+
+// Initialize TrapAlert
+new TrapAlert({
+  tenantId: 'trapalert-demo-tenant',
+  collectorEndpoint: 'https://api.trapalert.com/collect' // Dummy endpoint for demo
+});
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
