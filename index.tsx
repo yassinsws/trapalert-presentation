@@ -9,6 +9,11 @@ const ta = TrapAlert.init({
   collectorEndpoint: 'https://api.trapalert.com/collect' // Dummy endpoint for demo
 });
 
+// Expose for demo and show default
+(window as any).trapAlert = ta;
+// Wait a moment for DOM injection then show
+setTimeout(() => ta.toggleSidebar(true), 1000);
+
 const rootElement = document.getElementById('root');
 if (!rootElement) {
   throw new Error("Could not find root element to mount to");

@@ -272,7 +272,7 @@ export class TrapAlert {
     }
   }
 
-  private toggleSidebar(force?: boolean) {
+  public toggleSidebar(force?: boolean) {
     const ui = this.shadowRoot?.querySelector('.trap-ghost');
     if (ui) {
       if (force !== undefined) {
