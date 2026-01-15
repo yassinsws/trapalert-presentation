@@ -4,11 +4,11 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Problem from './components/Problem';
 import Solution from './components/Solution';
+import HowItWorks from './components/HowItWorks';
 import Demo from './components/Demo';
 import SystemicJourney from './components/SystemicJourney';
 import Impact from './components/Impact';
 import Reflection from './components/Reflection';
-import Team from './components/Team';
 import Appendix from './components/Appendix';
 
 function App() {
@@ -19,11 +19,11 @@ function App() {
         <Hero />
         <Problem />
         <Solution />
+        <HowItWorks />
         <SystemicJourney />
         <Reflection />
         <Demo />
         <Impact />
-        <Team />
         <Appendix />
       </main>
     </div>
