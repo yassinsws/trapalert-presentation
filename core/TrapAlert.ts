@@ -183,102 +183,233 @@ export class TrapAlert {
   private injectUI() {
     if (!document.body) return;
 
+    // 1. Inject Global Layout Shift Styles
+    const globalStyle = document.createElement('style');
+    globalStyle.textContent = `
+        body.trapalert-open {
+            margin-right: 350px;
+            transition: margin 0.3s ease;
+            overflow-x: hidden;
+        }
+    `;
+    document.head.appendChild(globalStyle);
+
     const container = document.createElement('div');
     container.id = 'trapalert-container';
-    document.body.appendChild(container);
+    document.body.appendChild(container); // Append to body, not inside other elements
     this.shadowRoot = container.attachShadow({ mode: 'open' });
 
     const style = document.createElement('style');
     style.textContent = `
-          :host { all: initial; }
-          .trap-ghost {
-              position: fixed;
-              bottom: 20px;
-              right: 20px;
-              background: #1a1a1a;
-              color: white;
-              padding: 16px;
-              border-radius: 12px;
-              font-family: system-ui, sans-serif;
-              box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-              z-index: 99999;
-              transform: translateY(150%);
-              transition: transform 0.3s ease-out;
-              max-width: 300px;
-              border: 1px solid #333;
-          }
-          .trap-ghost.visible {
-              transform: translateY(0);
-          }
-          .trap-score {
-              font-size: 12px;
-              color: #888;
-              margin-bottom: 8px;
-          }
-          .trap-title {
-              font-weight: bold;
-              margin-bottom: 4px;
-              display: flex;
-              align-items: center;
-              gap: 8px;
-          }
-          .trap-icon {
-              color: #FFD700;
-          }
-          .trap-btn {
-              background: #FFD700;
-              color: black;
-              border: none;
-              padding: 8px 12px;
-              border-radius: 6px;
-              margin-top: 12px;
-              cursor: pointer;
-              font-weight: 600;
-              width: 100%;
-          }
-      `;
+        :host {
+          --ta-blue: #667eea;
+          --ta-sidebar-width: 350px;
+        }
+        * { box-sizing: border-box; }
 
-    const ui = document.createElement('div');
-    ui.className = 'trap-ghost';
-    ui.innerHTML = `
-          <div class="trap-score">Struggle Score: <span id="score-val">0</span></div>
-          <div class="trap-title">
-             <span class="trap-icon">⚠️</span> Stuck?
-          </div>
-          <div class="trap-msg">We noticed you might be having trouble. Need help?</div>
-          <button class="trap-btn">Get Assistance</button>
-      `;
+        .trapalert-sidebar {
+          position: fixed;
+          top: 0;
+          right: calc(var(--ta-sidebar-width) * -1);
+          width: var(--ta-sidebar-width);
+          height: 100vh;
+          background: linear-gradient(135deg, #1a1c2c 0%, #4a192c 100%);
+          box-shadow: -4px 0 30px rgba(0, 0, 0, 0.5);
+          transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          z-index: 2147483647; /* Max Z-Index */
+          color: white;
+          font-family: 'Outfit', sans-serif;
+          display: flex;
+          flex-direction: column;
+          padding: 40px 30px;
+          border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .trapalert-sidebar.visible {
+          right: 0;
+        }
+
+        .trapalert-handle {
+          position: fixed;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          background: #1a1c2c;
+          color: white;
+          padding: 15px 8px;
+          border-radius: 8px 0 0 8px;
+          cursor: pointer;
+          writing-mode: vertical-rl;
+          text-orientation: mixed;
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          border: 1px solid rgba(255,255,255,0.2);
+          border-right: none;
+          transition: padding 0.2s;
+          z-index: 2147483646;
+          box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+          display: block;
+        }
+
+        .trapalert-handle:hover {
+          padding-right: 15px;
+          background: #2a2c3c;
+        }
+
+        .trapalert-header {
+          font-size: 24px;
+          font-weight: 700;
+          margin-bottom: 20px;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+
+        .trapalert-icon {
+          width: 36px;
+          height: 36px;
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 22px;
+        }
+
+        .trapalert-message {
+          font-size: 15px;
+          line-height: 1.6;
+          margin-bottom: 30px;
+          color: rgba(255, 255, 255, 0.8);
+        }
+
+        .trapalert-score-container {
+             background: rgba(0, 0, 0, 0.3);
+             padding: 20px;
+             border-radius: 12px;
+             margin-bottom: 25px;
+             border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .trapalert-score-value {
+             font-size: 32px;
+             font-weight: 800;
+             color: #fff;
+        }
+
+        .trapalert-button {
+          background: white;
+          color: #1a1c2c;
+          border: none;
+          padding: 16px 24px;
+          border-radius: 10px;
+          font-size: 15px;
+          font-weight: 700;
+          cursor: pointer;
+          transition: all 0.2s;
+          margin-bottom: 12px;
+          width: 100%;
+        }
+
+        .trapalert-button:hover {
+          background: #f0f0f0;
+          transform: translateY(-2px);
+        }
+
+        .trapalert-close {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          color: white;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s;
+        }
+
+        .trapalert-close:hover {
+          background: rgba(255, 255, 255, 0.2);
+          transform: rotate(90deg);
+        }
+    `;
+
+    const handle = document.createElement('div');
+    handle.className = 'trapalert-handle';
+    handle.id = 'ta-handle';
+    handle.textContent = 'Report Barrier';
+    handle.onclick = () => this.toggleSidebar(true);
+
+    const sidebar = document.createElement('aside');
+    sidebar.className = 'trapalert-sidebar';
+    sidebar.innerHTML = `
+      <button class="trapalert-close" id="ta-close">×</button>
+      <div class="trapalert-header">
+        <div class="trapalert-icon">🛡️</div>
+        <span>TrapAlert</span>
+      </div>
+
+      <div class="trapalert-score-container">
+          <div style="font-size: 11px; text-transform: uppercase; opacity: 0.6; margin-bottom: 8px;">Struggle Score</div>
+          <div class="trapalert-score-value" id="score-val">0</div>
+      </div>
+
+      <div class="trapalert-message">
+        We've detected potential navigation barriers. Help us improve the experience for everyone.
+      </div>
+
+      <button class="trapalert-button" id="get-help-btn">
+        🎥 Record Context
+      </button>
+    `;
 
     this.shadowRoot.appendChild(style);
-    this.shadowRoot.appendChild(ui);
+    this.shadowRoot.appendChild(handle);
+    this.shadowRoot.appendChild(sidebar);
+
+    // Bind events
+    this.shadowRoot.getElementById('ta-close')?.addEventListener('click', () => this.toggleSidebar(false));
+    this.shadowRoot.getElementById('get-help-btn')?.addEventListener('click', () => {
+      alert('Feedback Report triggered! (Demo)');
+      this.toggleSidebar(false);
+      this.score = 0;
+    });
 
     // Update score display loop
     setInterval(() => {
       const el = this.shadowRoot?.querySelector('#score-val');
       if (el) el.textContent = Math.floor(this.score).toString();
     }, 500);
-
-    ui.querySelector('.trap-btn')?.addEventListener('click', () => {
-      alert('Generating Report to: ' + this.config.collectorEndpoint);
-      this.score = 0; // Reset
-      this.toggleSidebar(false);
-    });
   }
 
   private triggerAlert(level: number) {
-    const ui = this.shadowRoot?.querySelector('.trap-ghost');
-    if (ui && !ui.classList.contains('visible')) {
-      ui.classList.add('visible');
-    }
+    // If triggered by heuristics, we open the sidebar automatically
+    this.toggleSidebar(true);
   }
 
   public toggleSidebar(force?: boolean) {
-    const ui = this.shadowRoot?.querySelector('.trap-ghost');
-    if (ui) {
-      if (force !== undefined) {
-        force ? ui.classList.add('visible') : ui.classList.remove('visible');
+    const sidebar = this.shadowRoot?.querySelector('.trapalert-sidebar');
+    const handle = this.shadowRoot?.querySelector('#ta-handle') as HTMLElement;
+
+    if (sidebar && handle) {
+      const isVisible = sidebar.classList.contains('visible');
+      const shouldBeVisible = force !== undefined ? force : !isVisible;
+
+      if (shouldBeVisible) {
+        sidebar.classList.add('visible');
+        handle.style.display = 'none';
+        document.body.classList.add('trapalert-open');
       } else {
-        ui.classList.toggle('visible');
+        sidebar.classList.remove('visible');
+        handle.style.display = 'block';
+        document.body.classList.remove('trapalert-open');
       }
     }
   }
