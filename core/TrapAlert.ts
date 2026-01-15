@@ -377,9 +377,8 @@ export class TrapAlert {
     // Bind events
     this.shadowRoot.getElementById('ta-close')?.addEventListener('click', () => this.toggleSidebar(false));
     this.shadowRoot.getElementById('get-help-btn')?.addEventListener('click', () => {
-      alert('Feedback Report triggered! (Demo)');
+      this.dispatchReport('manual');
       this.toggleSidebar(false);
-      this.score = 0;
     });
 
     // Update score display loop
@@ -412,5 +411,77 @@ export class TrapAlert {
         document.body.classList.remove('trapalert-open');
       }
     }
+  }
+
+  // --- Reporting ---
+
+  private async dispatchReport(type: 'auto' | 'manual') {
+    const payload = {
+      tenantId: this.config.tenantId,
+      timestamp: new Date().toISOString(),
+      url: window.location.href,
+      struggleScore: Math.floor(this.score),
+      description: type === 'manual' ? 'Manual user report' : 'Auto-triggered alert',
+      behavioralTrace: this.navigationPath, // Using navigation path as trace for now
+      context: this.captureContext(),
+      metadata: this.getBrowserMetadata()
+    };
+
+    console.log('[TrapAlert] Dispatching report:', payload);
+    alert('Sending Report to Dashboard...');
+
+    try {
+      // Remove trailing slash if present then append /feedback
+      const baseUrl = this.config.collectorEndpoint.replace(/\/$/, "");
+      const endpoint = `${baseUrl}/feedback`;
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (response.ok) {
+        console.log('[TrapAlert] Report sent successfully.');
+        alert('Report Sent Successfully!');
+        this.score = 0; // Reset
+      } else {
+        console.error('[TrapAlert] Report failed:', response.status);
+        alert(`Report Failed (Status: ${response.status})`);
+      }
+    } catch (error) {
+      console.error('[TrapAlert] Network error:', error);
+      alert('Report Failed: Network Error');
+    }
+  }
+
+  private captureContext() {
+    const activeElement = document.activeElement;
+    return {
+      activeElement: {
+        tagName: activeElement?.tagName || null,
+        id: activeElement?.id || null,
+        className: activeElement?.className || null,
+        role: activeElement?.getAttribute('role') || null
+      },
+      pageTitle: document.title,
+      focusHistory: this.focusHistory.slice(-5) // Last 5 focus items
+    };
+  }
+
+  private getBrowserMetadata() {
+    return {
+      userAgent: navigator.userAgent,
+      screenSize: {
+        width: window.screen.width,
+        height: window.screen.height
+      },
+      viewportSize: {
+        width: window.innerWidth,
+        height: window.innerHeight
+      },
+      language: navigator.language,
+      timestamp: Date.now()
+    };
   }
 }

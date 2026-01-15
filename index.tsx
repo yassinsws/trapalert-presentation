@@ -5,8 +5,8 @@ import { TrapAlert } from './core/TrapAlert';
 
 // Initialize TrapAlert
 const ta = TrapAlert.init({
-  tenantId: 'trapalert-demo-tenant',
-  collectorEndpoint: 'https://api.trapalert.com/collect' // Dummy endpoint for demo
+  tenantId: 'v4rSPXU0Fi8wJZU9JwJsr9tuGEPfq_w11nyFlrJ8dGg',
+  collectorEndpoint: 'https://trap-alert-dashboard.vercel.app/api'
 });
 
 // Expose for demo
